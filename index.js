@@ -18,28 +18,24 @@ app.post("/webhook/demo", async (req, res) => {
     resposta = "Top! Me diz: qual seu tipo de negócio?";
   }
 
-  const response = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    chat_id: chatId,
-    text: resposta
-  })
-});
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: resposta
+      })
+    });
 
-const data = await response.json();
-console.log("📤 RESPOSTA TELEGRAM:", data);
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: resposta
-    })
-  });
+    const data = await response.json();
+    console.log("📤 RESPOSTA TELEGRAM:", data);
+
+  } catch (err) {
+    console.error("❌ ERRO AO ENVIAR:", err);
+  }
 
   res.sendStatus(200);
 });
