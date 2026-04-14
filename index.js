@@ -10,6 +10,8 @@ app.post("/webhook/demo", async (req, res) => {
   const text = req.body.message?.text || "";
   const chatId = req.body.message?.chat?.id;
 
+  console.log("🔥 RECEBI:", text);
+
   let resposta = "Oi! Sou a Florence 😊 Me conta o que você procura.";
 
   if (text.toLowerCase().includes("preço")) {
@@ -18,7 +20,9 @@ app.post("/webhook/demo", async (req, res) => {
 
   await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       chat_id: chatId,
       text: resposta
